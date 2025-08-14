@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bitakati App - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #d1c4e9, #9c4dcc); /* الأرجواني الفاتح */
+      color: #2f2166; /* اللون الداكن للنصوص */
+      scroll-behavior: smooth;
+    }
+    header {
+      background-color: rgba(82, 63, 121, 0.85);
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      color: #f0e9ff; /* اللون الأبيض للنص في الهيدر */
+    }
+    section {
+      max-width: 900px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.85); /* خلفية بيضاء فاتحة */
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      color: #2f2166; /* النص باللون الداكن */
+    }
+    section:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      border-bottom: 2px solid #9b87d4;
+      padding-bottom: 10px;
+      color: #2f2166;
+    }
+    .app-image {
+      text-align: center;
+    }
+    .app-image img {
+      max-width: 80%;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      margin-top: 20px;
+    }
+    .description {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      margin-top: 30px;
+    }
+    footer {
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bitakati Mobile App</h1>
+  </header>
+
+  <section>
+    <h2>About the Project</h2>
+
+    <!-- Image of the app -->
+    <div class="app-image">
+      <img src="your-image-path-here.png" alt="Bitakati App Screenshot" />
+    </div>
+
+    <!-- Description of the app -->
+    <div class="description">
+      <p>
+        This is a mobile application developed using Flutter. It showcases a simple and intuitive interface to help users manage their tasks effectively. The app includes features such as task creation, editing, and deletion, as well as the ability to categorize tasks.
+      </p>
+      <p>
+        The app is still in the development phase, but it showcases the power of Flutter in creating cross-platform mobile applications with a smooth and responsive design.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Omar Ahmed. All rights reserved.
+  </footer>
+</body>
+</html>

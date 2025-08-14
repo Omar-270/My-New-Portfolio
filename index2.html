@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ice Cream Data Analysis - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #d1c4e9, #9c4dcc); /* أرجواني فاتح */
+      color: #2f2166; /* تغيير اللون إلى درجة داكنة للمقروئية */
+      scroll-behavior: smooth;
+    }
+    header {
+      background-color: rgba(138, 124, 190, 0.85);
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      color: #f0e9ff; /* جعل النص أبيض ليتناسب مع الخلفية */
+    }
+    section {
+      max-width: 900px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.85); /* خلفية فاتحة لتباين أفضل مع النص */
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      color: #2f2166; /* نص باللون الداكن لزيادة التباين */
+    }
+    section:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    section:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+    section:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      border-bottom: 2px solid #9b87d4;
+      padding-bottom: 10px;
+      color: #2f2166;
+    }
+    .description {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      margin-top: 30px;
+      color: #2f2166; /* جعل النص داكنًا لسهولة القراءة */
+    }
+    .chart-container {
+      max-width: 800px;
+      margin: 30px auto;
+      text-align: center;
+    }
+    footer {
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ice Cream Data Analysis</h1>
+  </header>
+
+  <section>
+    <h2>About the Project</h2>
+    <div class="description">
+      <p>
+        This project focuses on analyzing ice cream sales data to uncover patterns in customer preferences. The data includes information on ice cream flavors, ratings, customer age groups, and seasonal trends.
+      </p>
+      <p>
+        We used data visualization tools to generate insights on which flavors are most popular, how customer ratings fluctuate, and the impact of different factors on sales performance.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sales Data Insights</h2>
+    <div class="chart-container">
+      <canvas id="salesChart"></canvas>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Omar Ahmed. All rights reserved.
+  </footer>
+
+  <script>
+    // Sample data for Ice Cream Sales Analysis (can be replaced with real data)
+    const labels = ["Vanilla", "Chocolate", "Strawberry", "Mint", "Cookies & Cream"];
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'Sales Quantity',
+        data: [12, 19, 9, 5, 14], // Example data, replace with real sales data
+        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+        borderWidth: 1
+      }]
+    };
+
+    // Create a bar chart using Chart.js
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    const salesChart = new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            callbacks: {
+              label: function(tooltipItem) {
+                return tooltipItem.raw + " sales";
+              }
+            }
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

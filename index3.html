@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jnnaty Web Page - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e1bee7, #9c4dcc); /* نفس الألوان الأرجوانية */
+      color: #f0e9ff;
+      scroll-behavior: smooth;
+    }
+    header {
+      background-color: rgba(82, 63, 121, 0.85);
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+    }
+    section {
+      max-width: 900px;
+      margin: 50px auto;
+      background: rgba(82, 63, 121, 0.6);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      color: #f0e9ff;
+    }
+    section:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      border-bottom: 2px solid #9b87d4;
+      padding-bottom: 10px;
+    }
+    .app-image {
+      text-align: center;
+    }
+    .app-image img {
+      max-width: 80%;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      margin-top: 20px;
+    }
+    .description {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      margin-top: 30px;
+    }
+    footer {
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Jnnaty Web Page</h1>
+  </header>
+
+  <section>
+    <h2>About the Project</h2>
+
+    <!-- Image of the app -->
+    <div class="app-image">
+      <img src="your-image-path-here.png" alt="Jnnaty Web Page Screenshot" />
+    </div>
+
+    <!-- Description of the project -->
+    <div class="description">
+      <p>
+        Jnnaty is a project that showcases a simple, informative web page for a concept of a smart city. The page highlights the city’s services, smart systems, and general information about the innovative features that it offers. The site also includes a contact form and user interaction elements.
+      </p>
+      <p>
+        This project was developed using **HTML** and **CSS** for layout and design. It aims to present clean and modern UI/UX design principles while also being informative and user-friendly.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Omar Ahmed. All rights reserved.
+  </footer>
+
+</body>
+</html>
