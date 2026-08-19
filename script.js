@@ -19,11 +19,11 @@ if(deciCard){
 }
 
 const base='https://github.com/Omar-270/My-New-Portfolio/blob/main/';
-const raw='https://github.com/Omar-270/My-New-Portfolio/raw/refs/heads/main/';
+const raw='https://raw.githubusercontent.com/Omar-270/My-New-Portfolio/refs/heads/main/';
 const projectData={
- 'Food Delivery Data Analysis':{type:'Data Analysis · Featured',description:'A 2,050-row food-delivery analysis focused on data quality, customer behavior and business performance.',details:['Cleaned missing values and duplicates','Fixed data types and inconsistent city values','Handled outliers and explored business patterns','Extracted actionable customer and sales insights'],tech:'Python · Pandas · Matplotlib · Data Cleaning · Business Insights',github:base+'lv3_finalProject_Omar_DECI4-S-423085.ipynb',download:raw+'lv3_finalProject_Omar_DECI4-S-423085.ipynb'},
- 'Vehicle & License Management System':{type:'Python · BMS + Registration',description:'A combined BMS + Registration system for vehicle and driving-license services, with authentication and multiple service workflows.',details:['Registration and login','Vehicle ID services and renewals','Driving-license issuing and renewal','Lost ID requests'],tech:'Python · Authentication · Service Management',github:base+'BMS.ipynb',download:raw+'BMS.ipynb',extra:{label:'Registration Code ↗',url:base+'Registeration.ipynb',downloadLabel:'Download Registration',download:raw+'Registeration.ipynb'}},
- 'Bank Management System':{type:'Python · Banking',description:'A complete console banking system for customer accounts and core banking operations.',details:['Account registration and balance inquiry','Deposits and withdrawals','Customer account operations','Visa creation, activation and updating'],tech:'Python · Banking Logic · Validation',github:base+'Bank%20system%20(1)',download:raw+'Bank%20system%20(1)'},
+ 'Food Delivery Data Analysis':{type:'Data Analysis · Featured',description:'A 2,050-row food-delivery analysis focused on data quality, customer behavior and business performance.',details:['Cleaned missing values and duplicates','Fixed data types and inconsistent city values','Handled outliers and explored business patterns','Extracted actionable customer and sales insights'],tech:'Python · Pandas · Matplotlib · Data Cleaning · Business Insights',github:base+'lv3_finalProject_Omar_DECI4-S-423085.ipynb',download:raw+'lv3_finalProject_Omar_DECI4-S-423085.ipynb',filename:'Food_Delivery_Data_Analysis.ipynb'},
+ 'Vehicle & License Management System':{type:'Python · BMS + Registration',description:'A combined BMS + Registration system for vehicle and driving-license services, with authentication and multiple service workflows.',details:['Registration and login','Vehicle ID services and renewals','Driving-license issuing and renewal','Lost ID requests'],tech:'Python · Authentication · Service Management',github:base+'BMS.ipynb',download:raw+'BMS.ipynb',filename:'BMS.ipynb',extra:{label:'Registration Code ↗',url:base+'Registeration.ipynb',downloadLabel:'Download Registration',download:raw+'Registeration.ipynb',filename:'Registration.ipynb'}},
+ 'Bank Management System':{type:'Python · Banking',description:'A complete console banking system for customer accounts and core banking operations.',details:['Account registration and balance inquiry','Deposits and withdrawals','Customer account operations','Visa creation, activation and updating'],tech:'Python · Banking Logic · Validation',github:base+'Bank_system_new%20(1).ipynb',download:raw+'Bank_system_new%20(1).ipynb',filename:'Bank_system_new (1).ipynb'},
  'Smart Forest Fire Detection System':{type:'AI · IoT · ISEF',description:'An AI and IoT-based concept for early forest-fire detection, risk assessment, location identification and rapid alerts.',details:['Environmental data analysis','Early fire detection','Risk-level and location identification','Immediate alert to the nearest firefighting center'],tech:'AI · IoT · Environmental Data',github:null,download:false},
  'Smart Agriculture Robot':{type:'Arduino · Robotics · Alamein 2025',description:'A smart agriculture robot designed to understand soil conditions and communicate the results to the user.',details:['Soil-moisture sensing','Bluetooth communication with a mobile app','Robotic arm for sensor placement','Remote camera monitoring'],tech:'Arduino Uno · Soil Moisture Sensor · Bluetooth · Servo Motors · Camera',github:null,download:false}
 };
@@ -38,6 +38,7 @@ modal.querySelector('.project-modal-backdrop').addEventListener('click',closeMod
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
 const makeButton=(text,href,extra='')=>{const a=document.createElement('a');a.className='btn '+extra;a.href=href;a.target='_blank';a.rel='noreferrer';a.textContent=text;return a};
+const makeDownload=(text,href,filename)=>{const a=document.createElement('a');a.className='btn download-action';a.href=href;a.textContent=text;a.setAttribute('download',filename||'project.ipynb');a.addEventListener('click',async e=>{e.preventDefault();try{const response=await fetch(href);if(!response.ok)throw new Error('Download failed');const blob=await response.blob();const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=filename||'project.ipynb';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}catch(err){window.open(href,'_blank','noopener,noreferrer')}});return a};
 
 document.querySelectorAll('#projects .project').forEach(card=>{
  const title=card.querySelector('h3')?.textContent.trim();
@@ -49,7 +50,7 @@ document.querySelectorAll('#projects .project').forEach(card=>{
  const view=document.createElement('button');view.className='btn primary-action';view.type='button';view.textContent='View Project →';actions.appendChild(view);
  if(data.github){
    const code=makeButton('View Code ↗',data.github,'');actions.appendChild(code);
-   const dl=document.createElement('a');dl.className='btn download-action';dl.href=data.download;dl.download='';dl.textContent='Download Project ↓';actions.appendChild(dl);
+   actions.appendChild(makeDownload('Download Project ↓',data.download,data.filename));
  }
  card.appendChild(actions);
  view.addEventListener('click',()=>{
@@ -61,8 +62,8 @@ document.querySelectorAll('#projects .project').forEach(card=>{
    const modalActions=modal.querySelector('#project-modal-actions');modalActions.innerHTML='';
    if(data.github){
      modalActions.appendChild(makeButton('View Code ↗',data.github,'primary'));
-     const dl=document.createElement('a');dl.className='btn download-action';dl.href=data.download;dl.download='';dl.textContent='Download Project ↓';modalActions.appendChild(dl);
-     if(data.extra){modalActions.appendChild(makeButton(data.extra.label,data.extra.url,''));const ed=document.createElement('a');ed.className='btn download-action';ed.href=data.extra.download;ed.download='';ed.textContent=data.extra.downloadLabel+' ↓';modalActions.appendChild(ed)}
+     modalActions.appendChild(makeDownload('Download Project ↓',data.download,data.filename));
+     if(data.extra){modalActions.appendChild(makeButton(data.extra.label,data.extra.url,''));modalActions.appendChild(makeDownload(data.extra.downloadLabel+' ↓',data.extra.download,data.extra.filename))}
    }
    modal.querySelector('#project-modal-note').textContent=data.github?'Code and download links open the actual project files stored in this portfolio repository.':'This competition/hardware project is presented for viewing only.';
    modal.classList.add('open');
