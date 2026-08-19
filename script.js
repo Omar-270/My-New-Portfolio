@@ -4,20 +4,8 @@ nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classL
 const bar=document.getElementById('scroll-progress');
 const update=()=>{const d=document.documentElement,m=d.scrollHeight-d.clientHeight;bar.style.width=(m?d.scrollTop/m*100:0)+'%'};
 addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
-
-// Restore the DECI Level 2 certificate as a real image preview.
 const deciCard=document.querySelector('a.certificate[href="certificates/DECI_2.jpg.png"]');
-if(deciCard){
-  const preview=deciCard.querySelector('div[style*="height:260px"]');
-  if(preview){
-    const img=document.createElement('img');
-    img.src='certificates/DECI_2.jpg.png';
-    img.alt='DECI Level 2 certificate';
-    img.style.cssText='display:block;width:100%;height:260px;object-fit:cover;object-position:top;background:#fff;';
-    preview.replaceWith(img);
-  }
-}
-
+if(deciCard){const preview=deciCard.querySelector('div[style*="height:260px"]');if(preview){const img=document.createElement('img');img.src='certificates/DECI_2.jpg.png';img.alt='DECI Level 2 certificate';img.style.cssText='display:block;width:100%;height:260px;object-fit:cover;object-position:top;background:#fff;';preview.replaceWith(img)}}
 const base='https://github.com/Omar-270/My-New-Portfolio/blob/main/';
 const raw='https://raw.githubusercontent.com/Omar-270/My-New-Portfolio/refs/heads/main/';
 const projectData={
@@ -27,49 +15,9 @@ const projectData={
  'Smart Forest Fire Detection System':{type:'AI · IoT · ISEF',description:'An AI and IoT-based concept for early forest-fire detection, risk assessment, location identification and rapid alerts.',details:['Environmental data analysis','Early fire detection','Risk-level and location identification','Immediate alert to the nearest firefighting center'],tech:'AI · IoT · Environmental Data',github:null,download:false},
  'Smart Agriculture Robot':{type:'Arduino · Robotics · Alamein 2025',description:'A smart agriculture robot designed to understand soil conditions and communicate the results to the user.',details:['Soil-moisture sensing','Bluetooth communication with a mobile app','Robotic arm for sensor placement','Remote camera monitoring'],tech:'Arduino Uno · Soil Moisture Sensor · Bluetooth · Servo Motors · Camera',github:null,download:false}
 };
-
-const modal=document.createElement('div');
-modal.className='project-modal';
-modal.innerHTML='<div class="project-modal-backdrop"></div><div class="project-modal-box" role="dialog" aria-modal="true" aria-labelledby="project-modal-title"><button class="project-modal-close" aria-label="Close">×</button><div class="mini-label" id="project-modal-type"></div><h2 id="project-modal-title"></h2><p id="project-modal-description"></p><h3>What it includes</h3><ul id="project-modal-details"></ul><div class="tags" id="project-modal-tech"></div><div class="project-modal-actions" id="project-modal-actions"></div><p class="project-modal-note" id="project-modal-note"></p></div>';
-document.body.appendChild(modal);
-const closeModal=()=>modal.classList.remove('open');
-modal.querySelector('.project-modal-close').addEventListener('click',closeModal);
-modal.querySelector('.project-modal-backdrop').addEventListener('click',closeModal);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-
+const modal=document.createElement('div');modal.className='project-modal';modal.innerHTML='<div class="project-modal-backdrop"></div><div class="project-modal-box" role="dialog" aria-modal="true" aria-labelledby="project-modal-title"><button class="project-modal-close" aria-label="Close">×</button><div class="mini-label" id="project-modal-type"></div><h2 id="project-modal-title"></h2><p id="project-modal-description"></p><h3>What it includes</h3><ul id="project-modal-details"></ul><div class="tags" id="project-modal-tech"></div><div class="project-modal-actions" id="project-modal-actions"></div><p class="project-modal-note" id="project-modal-note"></p></div>';document.body.appendChild(modal);
+const closeModal=()=>modal.classList.remove('open');modal.querySelector('.project-modal-close').addEventListener('click',closeModal);modal.querySelector('.project-modal-backdrop').addEventListener('click',closeModal);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 const makeButton=(text,href,extra='')=>{const a=document.createElement('a');a.className='btn '+extra;a.href=href;a.target='_blank';a.rel='noreferrer';a.textContent=text;return a};
-const makeDownload=(text,href,filename)=>{const a=document.createElement('a');a.className='btn download-action';a.href=href;a.textContent=text;a.setAttribute('download',filename||'project.ipynb');a.addEventListener('click',async e=>{e.preventDefault();try{const response=await fetch(href);if(!response.ok)throw new Error('Download failed');const blob=await response.blob();const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=filename||'project.ipynb';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}catch(err){window.open(href,'_blank','noopener,noreferrer')}});return a};
-
-document.querySelectorAll('#projects .project').forEach(card=>{
- const title=card.querySelector('h3')?.textContent.trim();
- const data=projectData[title];
- if(!data)return;
- const oldLink=card.querySelector('.project-link');
- if(oldLink)oldLink.style.display='none';
- const actions=document.createElement('div');actions.className='project-actions';
- const view=document.createElement('button');view.className='btn primary-action';view.type='button';view.textContent='View Project →';actions.appendChild(view);
- if(data.github){
-   const code=makeButton('View Code ↗',data.github,'');actions.appendChild(code);
-   actions.appendChild(makeDownload('Download Project ↓',data.download,data.filename));
- }
- card.appendChild(actions);
- view.addEventListener('click',()=>{
-   modal.querySelector('#project-modal-type').textContent=data.type;
-   modal.querySelector('#project-modal-title').textContent=title;
-   modal.querySelector('#project-modal-description').textContent=data.description;
-   modal.querySelector('#project-modal-details').innerHTML=data.details.map(x=>`<li>${x}</li>`).join('');
-   modal.querySelector('#project-modal-tech').innerHTML=data.tech.split(' · ').map(x=>`<span>${x}</span>`).join('');
-   const modalActions=modal.querySelector('#project-modal-actions');modalActions.innerHTML='';
-   if(data.github){
-     modalActions.appendChild(makeButton('View Code ↗',data.github,'primary'));
-     modalActions.appendChild(makeDownload('Download Project ↓',data.download,data.filename));
-     if(data.extra){modalActions.appendChild(makeButton(data.extra.label,data.extra.url,''));modalActions.appendChild(makeDownload(data.extra.downloadLabel+' ↓',data.extra.download,data.extra.filename))}
-   }
-   modal.querySelector('#project-modal-note').textContent=data.github?'Code and download links open the actual project files stored in this portfolio repository.':'This competition/hardware project is presented for viewing only.';
-   modal.classList.add('open');
- });
-});
-
-const projectStyle=document.createElement('style');
-projectStyle.textContent='.project-actions{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.2rem}.project-actions .btn{font-size:.72rem;padding:.72rem 1rem;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;background:#355675;color:#f8fafc;border:2px solid rgba(190,213,235,.38);border-radius:.75rem;font:900 .72rem Inter,system-ui,sans-serif}.project-actions .primary-action{background:#67d1ff;color:#081421;border-color:#67d1ff}.project-actions .download-action{background:transparent;color:#67d1ff;border-color:#67d1ff}.project-actions .btn:hover{transform:translateY(-2px);background:#466f95;border-color:#67d1ff}.project-actions .primary-action:hover{background:#8bdcff}.project-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:1.2rem}.project-modal.open{display:flex}.project-modal-backdrop{position:absolute;inset:0;background:rgba(5,12,22,.76);backdrop-filter:blur(7px)}.project-modal-box{position:relative;z-index:1;width:min(720px,100%);max-height:90vh;overflow:auto;padding:2rem;border:1px solid rgba(190,213,235,.25);border-radius:1.4rem;background:#243c58;box-shadow:0 30px 100px rgba(0,0,0,.4)}.project-modal-close{position:absolute;top:.8rem;right:.9rem;width:2.2rem;height:2.2rem;border:1px solid rgba(190,213,235,.25);border-radius:50%;background:#1a2b40;color:#fff;font-size:1.4rem;cursor:pointer}.project-modal-box h2{font-size:clamp(2rem,5vw,3.2rem);margin:.55rem 2.5rem 1rem 0}.project-modal-box h3{margin:1.5rem 0 .7rem;font-size:1rem}.project-modal-box ul{padding-left:1.2rem;color:#cbd7e3}.project-modal-box li{margin:.45rem 0}.project-modal-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem}.project-modal-actions .btn{display:inline-flex;align-items:center;justify-content:center;padding:.72rem 1rem;border:2px solid rgba(190,213,235,.38);border-radius:.75rem;background:#355675;color:#fff;font-weight:900;font-size:.72rem}.project-modal-actions .primary{background:#67d1ff;color:#081421;border-color:#67d1ff}.project-modal-actions .download-action{background:transparent;color:#67d1ff;border-color:#67d1ff}.project-modal-note{font-size:.75rem;color:#9eb2c6;margin-top:1rem}@media(max-width:560px){.project-actions{flex-direction:column}.project-actions .btn,.project-modal-actions .btn{width:100%}}';
-document.head.appendChild(projectStyle);
+const makeDownload=(text,href,filename)=>{const a=document.createElement('a');a.className='btn download-action';a.href=href;a.textContent=text;a.setAttribute('download',filename||'project.ipynb');a.addEventListener('click',async e=>{e.preventDefault();try{const response=await fetch(href,{cache:'no-store'});if(!response.ok)throw new Error('Download failed');const blob=await response.blob();const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=filename||'project.ipynb';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}catch(err){window.open(href,'_blank','noopener,noreferrer')}});return a};
+document.querySelectorAll('#projects .project').forEach(card=>{const title=card.querySelector('h3')?.textContent.trim(),data=projectData[title];if(!data)return;const oldLink=card.querySelector('.project-link');if(oldLink)oldLink.style.display='none';const actions=document.createElement('div');actions.className='project-actions';const view=document.createElement('button');view.className='btn primary-action';view.type='button';view.textContent='View Project →';actions.appendChild(view);if(data.github){actions.appendChild(makeButton('View Code ↗',data.github));actions.appendChild(makeDownload('Download Project ↓',data.download,data.filename))}card.appendChild(actions);view.addEventListener('click',()=>{modal.querySelector('#project-modal-type').textContent=data.type;modal.querySelector('#project-modal-title').textContent=title;modal.querySelector('#project-modal-description').textContent=data.description;modal.querySelector('#project-modal-details').innerHTML=data.details.map(x=>`<li>${x}</li>`).join('');modal.querySelector('#project-modal-tech').innerHTML=data.tech.split(' · ').map(x=>`<span>${x}</span>`).join('');const modalActions=modal.querySelector('#project-modal-actions');modalActions.innerHTML='';if(data.github){modalActions.appendChild(makeButton('View Code ↗',data.github,'primary'));modalActions.appendChild(makeDownload('Download Project ↓',data.download,data.filename));if(data.extra){modalActions.appendChild(makeButton(data.extra.label,data.extra.url));modalActions.appendChild(makeDownload(data.extra.downloadLabel+' ↓',data.extra.download,data.extra.filename))}}modal.querySelector('#project-modal-note').textContent=data.github?'Code and download links open the actual project files stored in this portfolio repository.':'This competition/hardware project is presented for viewing only.';modal.classList.add('open')})});
+const projectStyle=document.createElement('style');projectStyle.textContent='.project-actions{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.2rem}.project-actions .btn{font-size:.72rem;padding:.72rem 1rem;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;background:#355675;color:#f8fafc;border:2px solid rgba(190,213,235,.38);border-radius:.75rem;font:900 .72rem Inter,system-ui,sans-serif}.project-actions .primary-action{background:#67d1ff;color:#081421;border-color:#67d1ff}.project-actions .download-action{background:transparent;color:#67d1ff;border-color:#67d1ff}.project-actions .btn:hover{transform:translateY(-2px);background:#466f95;border-color:#67d1ff}.project-actions .primary-action:hover{background:#8bdcff}.project-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:1.2rem}.project-modal.open{display:flex}.project-modal-backdrop{position:absolute;inset:0;background:rgba(5,12,22,.76);backdrop-filter:blur(7px)}.project-modal-box{position:relative;z-index:1;width:min(720px,100%);max-height:90vh;overflow:auto;padding:2rem;border:1px solid rgba(190,213,235,.25);border-radius:1.4rem;background:#243c58;box-shadow:0 30px 100px rgba(0,0,0,.4)}.project-modal-close{position:absolute;top:.8rem;right:.9rem;width:2.2rem;height:2.2rem;border:1px solid rgba(190,213,235,.25);border-radius:50%;background:#1a2b40;color:#fff;font-size:1.4rem;cursor:pointer}.project-modal-box h2{font-size:clamp(2rem,5vw,3.2rem);margin:.55rem 2.5rem 1rem 0}.project-modal-box h3{margin:1.5rem 0 .7rem;font-size:1rem}.project-modal-box ul{padding-left:1.2rem;color:#cbd7e3}.project-modal-box li{margin:.45rem 0}.project-modal-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem}.project-modal-actions .btn{display:inline-flex;align-items:center;justify-content:center;padding:.72rem 1rem;border:2px solid rgba(190,213,235,.38);border-radius:.75rem;background:#355675;color:#fff;font-weight:900;font-size:.72rem}.project-modal-actions .primary{background:#67d1ff;color:#081421;border-color:#67d1ff}.project-modal-actions .download-action{background:transparent;color:#67d1ff;border-color:#67d1ff}.project-modal-note{font-size:.75rem;color:#9eb2c6;margin-top:1rem}@media(max-width:560px){.project-actions{flex-direction:column}.project-actions .btn,.project-modal-actions .btn{width:100%}}';document.head.appendChild(projectStyle);
